@@ -1,0 +1,16 @@
+{
+  "name": "backendwithnode",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Backend",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
