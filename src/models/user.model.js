@@ -58,12 +58,14 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
+/* model er moddhe direct custom function define kora jai  */
+
 /*Ami "isPasswordCorrect" name a custom method define korchi , jeta
 password currect kina check korbe */
 userSchema.methods.isPasswordCorrect = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
-
+/* userSchema er moddhe generateAccessToken function inject korechi */
 userSchema.methods.generateAccessToken = function () {
   return jwt.sign(
     //Payload
@@ -78,7 +80,7 @@ userSchema.methods.generateAccessToken = function () {
   );
 };
 
-
+/* userSchema er moddhe generateRefreshToken function inject korechi */
 userSchema.methods.generateRefreshToken = function () {
   return jwt.sign(
     {
