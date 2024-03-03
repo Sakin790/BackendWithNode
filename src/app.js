@@ -18,6 +18,12 @@ extended=> for nested*/
 app.use(express.static("public")); // static file rakhar jonno
 app.use(cookieParser()); // CURD in cookie
 
+//routes import
+import userRouter from "./routes/user.router.js";
+//routes decleartion
 
+app.use("/api/v1/users", userRouter);
+app.use("/api/v1", userRouter);
+//http://localhost:8000/users/register
 
 export { app };
