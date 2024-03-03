@@ -11,4 +11,3 @@ ConnectDB()
     console.log("MongoDB Connection Error!!!", error);
   });
 
-console.log(process.env.PORT);
