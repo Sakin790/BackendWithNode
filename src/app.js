@@ -15,7 +15,7 @@ app.use(
   express.urlencoded({ extended: true, limit: "16kb" })
 ); /*url theke data neyar jonno
 extended=> for nested*/
-app.use(express.static("public")); // static file rakhar jonno
+app.use(express.static("public")); // static file rakhar jonno , jmon image
 app.use(cookieParser()); // CURD in cookie
 
 //routes import
