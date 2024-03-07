@@ -1,11 +1,12 @@
 import { app } from "./app.js";
 import ConnectDB from "./db/index.js";
-import "dotenv/config";
-
+import dotenv from "dotenv";
+dotenv.config({
+  path: "src/.env",
+});
 
 ConnectDB()
   .then(() => {
-    console.log(process.env.MONGODB_URL);
     app.listen(process.env.PORT || 8000, () => {
       console.log(`👍👍 Server is Listening on PORT ${process.env.PORT}`);
     });
