@@ -66,6 +66,7 @@ const registerUser = asyncHandler(async (req, res) => {
   return res
     .status(201)
     .json(new apiResponse(200, createUser, "User registred successfully"));
+ 
 });
 
 const healthCheck = asyncHandler(async (req, res) => {
