@@ -1,6 +1,7 @@
 import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
 
+/* .Env not working so i do that , please ignore it */
 cloudinary.config({
   cloud_name: "dgrb2e2rh",
   api_key: "514711175527823",
@@ -18,7 +19,7 @@ const uploadOnCloudinary = async (localFilePath) => {
     fs.unlinkSync(localFilePath);
     return response;
   } catch (error) {
-    //fs.unlinkSync(localFilePath); // remove the locally saved temporary file as the upload operation got failed
+    //fs.unlinkSync(localFilePath);
     return null;
   }
 };
