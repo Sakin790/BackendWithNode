@@ -22,9 +22,8 @@ const registerUser = asyncHandler(async (req, res) => {
   if (existedUser) {
     throw new apiError(409, "username or email already exist");
   }
-  /* */
+  
   const avatarLocalPath = req.files?.avatar[0]?.path;
-  console.log(`avavter path ${avatarLocalPath}`);
 
   let coverImageLocalPath;
   if (
@@ -32,18 +31,15 @@ const registerUser = asyncHandler(async (req, res) => {
     Array.isArray(req.files.coverImage) &&
     req.files.coverImage.length > 0
   ) {
-    coverImageLocalPath = req.files?.coverImage[0]?.path;
-    console.log(coverImageLocalPath);
+    coverImageLocalPath = req.files.coverImage[0].path;
   }
 
   if (!avatarLocalPath) {
     throw new apiError(400, "Avatar is reqired");
   }
-  //cloudinary function paramiter hisbae image er path nibe...
+
   const avatar = await uploadOnCloudinary(avatarLocalPath);
-  console.log(`Cloudinary avatar ${avatar}`);
   const coverImage = await uploadOnCloudinary(coverImageLocalPath);
-  console.log(`cloudinary coverImge ${coverImage}`);
 
   if (!avatar) {
     throw new apiError(400, "Avatar is required");
