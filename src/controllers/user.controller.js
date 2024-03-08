@@ -1,5 +1,10 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { User } from "../models/user.model.js";
+import { apiError } from "../utils/apiError.js";
+import { apiResponse } from "../utils/apiResponse.js";
+import { uploadOnCloudinary } from "../utils/cloudinary.js";
+
+
 const registerUser = asyncHandler(async (req, res) => {
   const { fullname, email, username, password } = req.body;
 
@@ -9,18 +14,17 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new apiError(400, "all fields are required");
   }
 
+  /* username and email exist kore kina */
   const existedUser = await User.findOne({
-   
-    $or: [{ username }, { email }], 
+    $or: [{ username }, { email }],
   });
 
   if (existedUser) {
     throw new apiError(409, "username or email already exist");
   }
-
-
+  /* */
   const avatarLocalPath = req.files?.avatar[0]?.path;
-  
+  console.log(`avavter path ${avatarLocalPath}`);
 
   let coverImageLocalPath;
   if (
@@ -28,16 +32,18 @@ const registerUser = asyncHandler(async (req, res) => {
     Array.isArray(req.files.coverImage) &&
     req.files.coverImage.length > 0
   ) {
-    coverImageLocalPath = req.files.coverImage[0].path;
+    coverImageLocalPath = req.files?.coverImage[0]?.path;
+    console.log(coverImageLocalPath);
   }
-
 
   if (!avatarLocalPath) {
     throw new apiError(400, "Avatar is reqired");
   }
   //cloudinary function paramiter hisbae image er path nibe...
   const avatar = await uploadOnCloudinary(avatarLocalPath);
+  console.log(`Cloudinary avatar ${avatar}`);
   const coverImage = await uploadOnCloudinary(coverImageLocalPath);
+  console.log(`cloudinary coverImge ${coverImage}`);
 
   if (!avatar) {
     throw new apiError(400, "Avatar is required");
@@ -61,13 +67,11 @@ const registerUser = asyncHandler(async (req, res) => {
   if (!createUser) {
     throw new apiError(500, "Something went Wrong while registering the user");
   }
-  
+
   return res
     .status(201)
-    .json(new apiResponse(200, createUser, "user registred successfully"));
+    .json(new apiResponse(200, createUser, "User registred successfully"));
 });
-
-
 
 const healthCheck = asyncHandler(async (req, res) => {
   console.log(req.id);
