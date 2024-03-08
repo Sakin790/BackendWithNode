@@ -4,7 +4,6 @@ import { apiError } from "../utils/apiError.js";
 import { apiResponse } from "../utils/apiResponse.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
-
 const registerUser = asyncHandler(async (req, res) => {
   const { fullname, email, username, password } = req.body;
 
@@ -22,7 +21,7 @@ const registerUser = asyncHandler(async (req, res) => {
   if (existedUser) {
     throw new apiError(409, "username or email already exist");
   }
-  
+
   const avatarLocalPath = req.files?.avatar[0]?.path;
 
   let coverImageLocalPath;
@@ -76,4 +75,11 @@ const healthCheck = asyncHandler(async (req, res) => {
   });
 });
 
-export { registerUser, healthCheck };
+const deleteUser = asyncHandler(async (req, res) => {
+  await User.deleteMany({});
+  res.status(200).json({
+    message: "All User deleted successfully",
+  });
+});
+
+export { registerUser, healthCheck, deleteUser };
