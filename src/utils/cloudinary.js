@@ -19,7 +19,7 @@ const uploadOnCloudinary = async (localFilePath) => {
     fs.unlinkSync(localFilePath);
     return response;
   } catch (error) {
-    //fs.unlinkSync(localFilePath);
+    //fs.unlinkSync(localFilePath); jodi error hoi taholeu remove dibo
     return null;
   }
 };
