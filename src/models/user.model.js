@@ -65,7 +65,9 @@ jeta password currect kina check korbe */
 userSchema.methods.isPasswordCorrect = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
-/* userSchema er moddhe generateAccessToken function inject korechi */
+/* userSchema er moddhe generateAccessToken function inject korechi
+use for short lived
+*/
 userSchema.methods.generateAccessToken = function () {
   return jwt.sign(
     //Payload
@@ -80,7 +82,8 @@ userSchema.methods.generateAccessToken = function () {
   );
 };
 
-/* userSchema er moddhe generateRefreshToken function inject korechi */
+/* userSchema er moddhe generateRefreshToken function inject korechi 
+use for long lived*/
 userSchema.methods.generateRefreshToken = function () {
   return jwt.sign(
     {
