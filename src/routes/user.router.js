@@ -22,4 +22,5 @@ router.route("/register").post(
 );
 router.route("/healthCheck").get(healthCheck);
 router.route("/delete").delete(deleteUser);
+
 export default router;

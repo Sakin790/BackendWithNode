@@ -19,11 +19,11 @@ app.use(cookieParser()); // CURD in cookie
 
 //routes import
 import userRouter from "./routes/user.router.js";
-//routes decleartion
 
+
+//routes decleartion
 app.use("/api/v1/users", userRouter);
-app.use("/api/v1", userRouter);
-app.use("/api/vi", userRouter);
+
 //http://localhost:8000/users/register
 
 export { app };
