@@ -80,7 +80,7 @@ const registerUser = asyncHandler(async (req, res) => {
   if (!createdUser) {
     throw new apiError(500, "Something went wrong while registering the user");
   }
-
+  console.log(`${createdUser.username} just registered`);
   return res
     .status(201)
     .json(new apiResponse(200, createdUser, "User registered Successfully"));
@@ -100,4 +100,4 @@ const deleteUser = asyncHandler(async (req, res) => {
   });
 });
 
-export { registerUser, healthCheck, deleteUser,};
+export { registerUser, healthCheck, deleteUser };
