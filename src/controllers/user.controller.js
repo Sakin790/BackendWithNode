@@ -86,8 +86,6 @@ const registerUser = asyncHandler(async (req, res) => {
     .json(new apiResponse(200, createdUser, "User registered Successfully"));
 });
 
-
-
 const healthCheck = asyncHandler(async (req, res) => {
   console.log(req.id);
   res.status(200).json({
