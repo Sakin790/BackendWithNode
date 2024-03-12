@@ -65,33 +65,31 @@ jeta password currect kina check korbe */
 userSchema.methods.isPasswordCorrect = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
-/* userSchema er moddhe generateAccessToken function inject korechi
+/* userSchema er moddhe generateAccessToken function inject korechi,
 use for short lived
 */
 userSchema.methods.generateAccessToken = function () {
   return jwt.sign(
-    //Payload
     {
-      _id: _id,
+      _id: this._id,
       email: this.email,
       username: this.username,
-      fullname: this.fullname,
+      fullName: this.fullName,
     },
-    process.env.ACCESS_TOKEN_SECRET,
-    { expiresIn: process.env.ACCESS_TOKEN_EXPIRY }
+    "NDBSDBJDGUEDahgdc85852dfcc",
+    {
+      expiresIn: "1d",
+    }
   );
 };
-
-/* userSchema er moddhe generateRefreshToken function inject korechi 
-use for long lived*/
 userSchema.methods.generateRefreshToken = function () {
   return jwt.sign(
     {
       _id: this._id,
     },
-    process.env.REFRESH_TOKEN_SECRET,
+    "BDNajsbasasndh5417SBKAJDB",
     {
-      expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
+      expiresIn: "10d",
     }
   );
 };

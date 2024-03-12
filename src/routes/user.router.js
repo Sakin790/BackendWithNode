@@ -4,6 +4,7 @@ import {
   registerUser,
   healthCheck,
   deleteUser,
+  loginUser,
 } from "../controllers/user.controller.js";
 const router = express.Router();
 
@@ -22,5 +23,6 @@ router.route("/register").post(
 );
 router.route("/healthCheck").get(healthCheck);
 router.route("/delete").delete(deleteUser);
+router.route("/login").post(loginUser);
 
 export default router;
