@@ -5,7 +5,10 @@ import {
   healthCheck,
   deleteUser,
   loginUser,
+  logoutUser,
 } from "../controllers/user.controller.js";
+import { verifyJWT } from "../middlewares/auth.middleware.js";
+
 const router = express.Router();
 
 router.route("/register").post(
@@ -24,5 +27,6 @@ router.route("/register").post(
 router.route("/healthCheck").get(healthCheck);
 router.route("/delete").delete(deleteUser);
 router.route("/login").post(loginUser);
+router.route("/logout").post(verifyJWT, logoutUser);
 
 export default router;

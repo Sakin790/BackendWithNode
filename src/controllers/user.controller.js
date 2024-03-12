@@ -134,6 +134,31 @@ const loginUser = asyncHandler(async (req, res) => {
     );
 })
 
+const logoutUser = asyncHandler(async (req, res) => {
+  await User.findByIdAndUpdate(
+    req.user._id,
+    {
+      $set: {
+        refreshToken: undefined, // this removes the field from document
+      },
+    },
+    {
+      new: true,
+    }
+  );
+
+  const options = {
+    httpOnly: true,
+    secure: true,
+  };
+
+  return res
+    .status(200)
+    .clearCookie("accessToken", options)
+    .clearCookie("refreshToken", options)
+    .json(new apiResponse(200, {}, "User logged Out"));
+});
+
 const healthCheck = asyncHandler(async (req, res) => {
   console.log(req.id);
   res.status(200).json({
@@ -148,4 +173,4 @@ const deleteUser = asyncHandler(async (req, res) => {
   });
 });
 
-export { registerUser, healthCheck, deleteUser , loginUser };
+export { registerUser, healthCheck, deleteUser , loginUser , logoutUser };
