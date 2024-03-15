@@ -4,15 +4,21 @@ import { apiError } from "../utils/apiError.js";
 import { apiResponse } from "../utils/apiResponse.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
+/*Akane AccessToken and RefreshToken Bananor jonno ekta method define korechi
+(user._id) pass korlei seta access and refresh token generate kore dibe
+*/
 const generateAccessAndRefereshTokens = async (userId) => {
   try {
     const user = await User.findById(userId);
     const accessToken = user.generateAccessToken();
     const refreshToken = user.generateRefreshToken();
 
+    /*model er moddhe refresh token save korabo */
     user.refreshToken = refreshToken;
     await user.save({ validateBeforeSave: false });
 
+    /* generateAccessAndRefereshTokens ta AccessToken And refreshToken return
+    korbe */
     return { accessToken, refreshToken };
   } catch (error) {
     throw new apiError(
@@ -89,7 +95,7 @@ const registerUser = asyncHandler(async (req, res) => {
 const loginUser = asyncHandler(async (req, res) => {
   const { email, username, password } = req.body;
   console.log(email);
-  
+
   if (!username && !email) {
     throw new apiError(400, "username or email is required");
   }
@@ -106,7 +112,9 @@ const loginUser = asyncHandler(async (req, res) => {
     throw new apiError(401, "Invalid user credentials");
   }
 
-  const { accessToken, refreshToken } = await generateAccessAndRefereshTokens(user._id);
+  const { accessToken, refreshToken } = await generateAccessAndRefereshTokens(
+    user._id
+  );
 
   const loggedInUser = await User.findById(user._id).select(
     "-password -refreshToken"
@@ -132,14 +140,14 @@ const loginUser = asyncHandler(async (req, res) => {
         "User logged In Successfully"
       )
     );
-})
+});
 
 const logoutUser = asyncHandler(async (req, res) => {
   await User.findByIdAndUpdate(
     req.user._id,
     {
       $set: {
-        refreshToken: 1, 
+        refreshToken: 1,
       },
     },
     {
@@ -173,4 +181,4 @@ const deleteUser = asyncHandler(async (req, res) => {
   });
 });
 
-export { registerUser, healthCheck, deleteUser , loginUser , logoutUser };
+export { registerUser, healthCheck, deleteUser, loginUser, logoutUser };
