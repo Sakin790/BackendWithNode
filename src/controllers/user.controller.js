@@ -117,7 +117,6 @@ const loginUser = asyncHandler(async (req, res) => {
     user._id
   );
 
-
   /*User object theke password and refreshToken remove kore dibo */
   const loggedInUser = await User.findById(user._id).select(
     "-password -refreshToken"
@@ -127,7 +126,7 @@ const loginUser = asyncHandler(async (req, res) => {
     httpOnly: true,
     secure: true,
   };
-/*Cookie er moddhe token gulo diye dibo ,pore okhen theke validation korbo */
+  /*Cookie er moddhe token gulo diye dibo ,pore okhen theke validation korbo */
   return res
     .status(200)
     .cookie("accessToken", accessToken, options)
@@ -145,14 +144,21 @@ const loginUser = asyncHandler(async (req, res) => {
     );
 });
 
+/*Logout kora mane user er token and cookie clear kora , kintu 1st dekhte 
+hobe je user already login in kina , tar jonno eka middlewarew design korte
+holo jeta kina (req er moddhe user add korbe , and oi user er id diye user 
+  find kore token undifined kore dibo r cookie remove kore dibo)
+ */
 const logoutUser = asyncHandler(async (req, res) => {
   await User.findByIdAndUpdate(
     req.user._id,
     {
       $set: {
-        refreshToken: 1,
+        refreshToken: undefined,
       },
     },
+    /*Return new value korbe , jodi old value kore tahole toh oknae
+    token thekei jacche */
     {
       new: true,
     }
