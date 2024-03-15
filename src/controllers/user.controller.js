@@ -111,11 +111,14 @@ const loginUser = asyncHandler(async (req, res) => {
   if (!isPasswordValid) {
     throw new apiError(401, "Invalid user credentials");
   }
-
+  /*generateAccessAndRefereshTokens ke user_id pass korai 
+            accessToken, refreshToken generate koreche  */
   const { accessToken, refreshToken } = await generateAccessAndRefereshTokens(
     user._id
   );
 
+
+  /*User object theke password and refreshToken remove kore dibo */
   const loggedInUser = await User.findById(user._id).select(
     "-password -refreshToken"
   );
@@ -124,7 +127,7 @@ const loginUser = asyncHandler(async (req, res) => {
     httpOnly: true,
     secure: true,
   };
-
+/*Cookie er moddhe token gulo diye dibo ,pore okhen theke validation korbo */
   return res
     .status(200)
     .cookie("accessToken", accessToken, options)
