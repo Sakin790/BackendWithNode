@@ -154,7 +154,7 @@ const logoutUser = asyncHandler(async (req, res) => {
     req.user._id,
     {
       $set: {
-        refreshToken: undefined, 
+        refreshToken: undefined,
       },
     },
     /*Return new value korbe , jodi old value kore tahole toh oknae
@@ -163,7 +163,7 @@ const logoutUser = asyncHandler(async (req, res) => {
       new: true,
     }
   );
-
+  /*Sudhu server theke access korar jabe */
   const options = {
     httpOnly: true,
     secure: true,
